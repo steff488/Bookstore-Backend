@@ -7,5 +7,4 @@ import com.steefy.bookstore.entity.Author;
 
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
-
 }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.steefy.bookstore.entity.User;
-import com.steefy.bookstore.service.UserService;
+import com.steefy.bookstore.service.impl.UserServiceImpl;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 

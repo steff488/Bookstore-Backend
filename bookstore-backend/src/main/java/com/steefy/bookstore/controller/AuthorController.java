@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.steefy.bookstore.dto.AuthorDto;
-import com.steefy.bookstore.service.AuthorService;
+import com.steefy.bookstore.service.impl.AuthorServiceImpl;
 
 import lombok.AllArgsConstructor;
 
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/authors")
 public class AuthorController {
 
-    private AuthorService authorService;
+    private AuthorServiceImpl authorService;
 
     // Create author
     @PostMapping

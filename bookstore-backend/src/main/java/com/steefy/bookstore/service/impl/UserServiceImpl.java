@@ -1,4 +1,4 @@
-package com.steefy.bookstore.service;
+package com.steefy.bookstore.service.impl;
 
 import com.steefy.bookstore.entity.User;
 import com.steefy.bookstore.repository.UserRepository;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserServiceImpl {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
