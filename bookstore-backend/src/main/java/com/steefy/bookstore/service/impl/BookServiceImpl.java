@@ -23,7 +23,6 @@ public class BookServiceImpl implements BookService{
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
 
-
     public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
@@ -32,8 +31,15 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookDto create(BookDto bookDto) {
-        Book book = BookMapper.mapToEntity(bookDto);
+        Author author = authorRepository.findById(bookDto.getAuthorId())
+        .orElseThrow(() -> new ResourceNotFoundException("Author with id(" + bookDto.getAuthorId() + ") doesn't exist."));
+
+        Category category = categoryRepository.findById(bookDto.getCategoryId())
+        .orElseThrow(() -> new ResourceNotFoundException("Category with id(" + bookDto.getCategoryId() + ") doesn't exist."));
+
+        Book book = BookMapper.mapToEntity(bookDto, author, category);
         Book savedBook = bookRepository.save(book);
+
         return BookMapper.mapToDto(savedBook);
     }
 
@@ -52,13 +58,18 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookDto update(Long bookId, BookDto updatedBookDto) {
+        Author author = authorRepository.findById(updatedBookDto.getAuthorId())
+        .orElseThrow(() -> new RuntimeException("Author with id(" + updatedBookDto.getAuthorId() + " doesn't exist."));
+
+        Category category = categoryRepository.findById(updatedBookDto.getCategoryId())
+        .orElseThrow(() -> new RuntimeException("Category with id(" + updatedBookDto.getCategoryId() + " doesn't exist."));
+
          Book book = bookRepository.findById(bookId)
         .orElseThrow(() -> new ResourceNotFoundException("Book with id(" + bookId + ") doesn't exist."));
 
         book.setTitle(updatedBookDto.getTitle());
-        // QUESTION: Is this bad??
-        book.setAuthor(authorRepository.findById(updatedBookDto.getAuthorId()).orElseThrow(() -> new RuntimeException("Author with id(" + updatedBookDto.getAuthorId() + " doesn't exist.")));
-        book.setCategory(categoryRepository.findById(updatedBookDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category with id(" + updatedBookDto.getCategoryId() + " doesn't exist.")));
+        book.setAuthor(author);
+        book.setCategory(category);
         book.setPrice(updatedBookDto.getPrice());
         book.setStock(updatedBookDto.getStock());
         book.setRating(updatedBookDto.getRating());

@@ -12,9 +12,9 @@ public class AuthorMapper {
     }
 
     public static Author mapToEntity(AuthorDto authorDto){
-        return new Author(
-            authorDto.getId(),
-            authorDto.getName()
-        );
+        return Author.builder()
+            .id(authorDto.getId())
+            .name(authorDto.getName())
+            .build();
     }
 }
