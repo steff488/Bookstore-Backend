@@ -19,25 +19,26 @@ import org.springframework.stereotype.Service;
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final AuthorMapper authorMapper;
 
     @Override
     public AuthorDto create(AuthorDto authorDto) {
-        Author author = AuthorMapper.mapToEntity(authorDto);
+        Author author = authorMapper.mapToEntity(authorDto);
         Author savedAuthor = authorRepository.save(author);
-        return AuthorMapper.mapToDto(savedAuthor);
+        return authorMapper.mapToDto(savedAuthor);
     }
 
     @Override
     public AuthorDto getById(Long authorId) {
         Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new ResourceNotFoundException("Author with id(" + authorId + ") doesn't exist."));
-        return AuthorMapper.mapToDto(author);
+        return authorMapper.mapToDto(author);
     }
 
     @Override
     public List<AuthorDto> getAll() {
         List<Author> authors = authorRepository.findAll();
-        return authors.stream().map((author) -> AuthorMapper.mapToDto(author)).collect(Collectors.toList());
+        return authors.stream().map((author) -> authorMapper.mapToDto(author)).collect(Collectors.toList());
     }
 
     @Override
@@ -47,8 +48,8 @@ public class AuthorServiceImpl implements AuthorService {
 
         author.setName(updatedAuthorDto.getName());
         Author updatedAuthor = authorRepository.save(author);
-
-        return AuthorMapper.mapToDto(updatedAuthor);
+        
+        return authorMapper.mapToDto(updatedAuthor);
     }
 
     @Override

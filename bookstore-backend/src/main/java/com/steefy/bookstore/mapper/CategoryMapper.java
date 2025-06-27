@@ -1,20 +1,43 @@
 package com.steefy.bookstore.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.steefy.bookstore.dto.CategoryDto;
 import com.steefy.bookstore.entity.Category;
 
+import lombok.AllArgsConstructor;
+
+@Component
+@AllArgsConstructor
 public class CategoryMapper {
-    public static CategoryDto mapToDto(Category Category){
+
+    /*
+    @Lazy
+    private BookMapper bookMapper;
+    */
+
+    public CategoryDto mapToDto(Category category){
+        
+        // List<Book> books = category.getBooks();
+        // List<BookDto> bookDtos = new ArrayList<>();
+
+        /*
+        for (Book book : books) {
+            bookDtos.add(bookMapper.mapToDto(book));
+        }
+        */
+
         return new CategoryDto(
-            Category.getId(),
-            Category.getName()
+            category.getId(),
+            category.getName()
+            //bookDtos
         );
     }
 
-    public static Category mapToEntity(CategoryDto CategoryDto){
+    public Category mapToEntity(CategoryDto categoryDto){
         return Category.builder()
-        .id(CategoryDto.getId())
-        .name(CategoryDto.getName())
+        .id(categoryDto.getId())
+        .name(categoryDto.getName())
         .build();
     }
 }

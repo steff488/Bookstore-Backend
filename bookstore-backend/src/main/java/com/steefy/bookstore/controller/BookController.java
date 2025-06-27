@@ -29,6 +29,7 @@ public class BookController {
 
     private BookServiceImpl bookService;
     private CategoryServiceImpl categoryService;
+    private CategoryMapper categoryMapper;
 
     // Create book
     @PostMapping
@@ -65,21 +66,11 @@ public class BookController {
         return ResponseEntity.ok("Book deleted succesfully!");
     }
 
-    // Get all books by category
-    @GetMapping("/category/{categoryName}")
-    public ResponseEntity<List<BookDto>> getAllByCategory(@PathVariable String categoryName){
-        CategoryDto categoryDto = categoryService.getByName(categoryName);
-        List<BookDto> books = bookService.getAllByCategory(CategoryMapper.mapToEntity(categoryDto));
+    // Get all books by categoryId
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<BookDto>> getAllByCategory(@PathVariable Long categoryId){
+        CategoryDto categoryDto = categoryService.getById(categoryId);
+        List<BookDto> books = bookService.getAllByCategory(categoryMapper.mapToEntity(categoryDto));
         return ResponseEntity.ok(books);
     }
-    
-    // QUESTION: Is this better? - Will imply to have both getAllByCategory and getAllByCategoryName
-    // Should I only have getAllByCategoryName instead?
-    /*
-    @GetMapping("/category/{categoryName}")
-    public ResponseEntity<List<BookDto>> getAllByCategory(@PathVariable String categoryName) {
-        List<BookDto> books = bookService.getAllByCategoryName(categoryName);
-        return ResponseEntity.ok(books);
-    }
-    */
 }

@@ -20,25 +20,26 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto create(UserRegistrationDto userRegistrationDto) {
-        User user = UserMapper.mapToEntity(userRegistrationDto);
+        User user = userMapper.mapToEntity(userRegistrationDto);
         User savedUser = userRepository.save(user);
-        return UserMapper.mapToDto(savedUser);
+        return userMapper.mapToDto(savedUser);
     }
 
     @Override
     public UserDto getById(Long userId) {
         User user = userRepository.findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("User with id(" + userId + ") doesn't exist."));
-        return UserMapper.mapToDto(user);
+        return userMapper.mapToDto(user);
     }
 
     @Override
     public List<UserDto> getAll() {
         List<User> users = userRepository.findAll();
-        return users.stream().map((user) -> UserMapper.mapToDto(user)).collect(Collectors.toList());
+        return users.stream().map((user) -> userMapper.mapToDto(user)).collect(Collectors.toList());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(updatedUserDto.getRole());
         User updatedUser = userRepository.save(user);
 
-        return UserMapper.mapToDto(updatedUser);
+        return userMapper.mapToDto(updatedUser);
     }
 
     @Override

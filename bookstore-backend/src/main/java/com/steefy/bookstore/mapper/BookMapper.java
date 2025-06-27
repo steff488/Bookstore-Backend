@@ -1,20 +1,29 @@
 package com.steefy.bookstore.mapper;
 
+import org.springframework.stereotype.Component;
+
+import com.steefy.bookstore.dto.AuthorDto;
 import com.steefy.bookstore.dto.BookDto;
+import com.steefy.bookstore.dto.CategoryDto;
 import com.steefy.bookstore.entity.Author;
 import com.steefy.bookstore.entity.Book;
 import com.steefy.bookstore.entity.Category;
+import com.steefy.bookstore.service.AuthorService;
+import com.steefy.bookstore.service.CategoryService;
 
+import lombok.AllArgsConstructor;
+
+@Component
+@AllArgsConstructor
 public class BookMapper {
 
-    /*  REFACTORING
-    // QUESTION: This seems illegal.
-    // I suppose mappers should not have access to raw database data?
-    private static AuthorRepository authorRepository;
-    private static CategoryRepository categoryRepository;
-    */
+    private final AuthorService authorService;
+    private final AuthorMapper authorMapper;
 
-    public static BookDto mapToDto(Book book){
+    private final CategoryService categoryService;
+    private final CategoryMapper categoryMapper;
+
+    public BookDto mapToDto(Book book){
         return new BookDto(
             book.getId(),
             book.getTitle(),
@@ -30,18 +39,19 @@ public class BookMapper {
         );
     }
 
-    // QUESTION: If i want to ignore the password of a user, 
-    // do I need a separate constructor for the User that does not contain the password?
+    public Book mapToEntity(BookDto bookDto){
 
-    // public statis Book mapToEntity(BookDto bookDto, Author author, Category category) {...}
-    public static Book mapToEntity(BookDto bookDto, Author author, Category category){
+        AuthorDto authorDto = authorService.getById(bookDto.getAuthorId());
+        Author author = authorMapper.mapToEntity(authorDto);
+
+        CategoryDto categoryDto = categoryService.getById(bookDto.getCategoryId());
+        Category category = categoryMapper.mapToEntity(categoryDto);
+
         return Book.builder()
         .id(bookDto.getId())
         .title(bookDto.getTitle())
         .author(author)
         .category(category)
-        //.author(authorRepository.findById(bookDto.getAuthorId()).orElseThrow(() -> new RuntimeException("TODo")))
-        //.category(categoryRepository.findById(bookDto.getCategoryId()).orElseThrow(() -> new RuntimeException("TODO")))
         .price(bookDto.getPrice())
         .stock(bookDto.getStock())
         .rating(bookDto.getRating())

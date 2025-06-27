@@ -19,40 +19,48 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
-        Category category = CategoryMapper.mapToEntity(categoryDto);
+
+        Category category = categoryMapper.mapToEntity(categoryDto);
         Category savedCategory = categoryRepository.save(category);
-        return CategoryMapper.mapToDto(savedCategory);
+
+        return categoryMapper.mapToDto(savedCategory);
     }
 
     @Override
     public CategoryDto getById(Long categoryId) {
+
         Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResourceNotFoundException("Category with id(" + categoryId + ") doesn't exist."));
-        return CategoryMapper.mapToDto(category);
+
+        return categoryMapper.mapToDto(category);
     }
 
     @Override
     public List<CategoryDto> getAll() {
+
         List<Category> categorys = categoryRepository.findAll();
-        return categorys.stream().map((category) -> CategoryMapper.mapToDto(category)).collect(Collectors.toList());
+        return categorys.stream().map((category) -> categoryMapper.mapToDto(category)).collect(Collectors.toList());
     }
 
     @Override
     public CategoryDto update(Long categoryId, CategoryDto updatedCategoryDto) {
+
         Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResourceNotFoundException("Category with id(" + categoryId + ") doesn't exist."));
 
         category.setName(updatedCategoryDto.getName());
         Category updatedCategory = categoryRepository.save(category);
 
-        return CategoryMapper.mapToDto(updatedCategory);
+        return categoryMapper.mapToDto(updatedCategory);
     }
 
     @Override
     public void delete(Long categoryId) {
+
         categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResourceNotFoundException("Category with id(" + categoryId + ") doesn't exist."));
 
@@ -61,8 +69,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getByName(String name) {
+
         Category category = categoryRepository.findByNameIgnoreCase(name)
         .orElseThrow(() -> new ResourceNotFoundException("Category with name '" + name + "' doesn't exist."));
-        return CategoryMapper.mapToDto(category);
+        return categoryMapper.mapToDto(category);
     }
 }

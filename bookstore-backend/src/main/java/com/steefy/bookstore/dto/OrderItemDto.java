@@ -1,7 +1,5 @@
 package com.steefy.bookstore.dto;
 
-import com.steefy.bookstore.entity.UserRole;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class OrderItemDto {
     private Long id;
-    private String userName;
-    private String email;
-    private UserRole role;
+    private Long bookId;
+    private Integer quantity;
+    private Double priceAtPurchase;
 }
