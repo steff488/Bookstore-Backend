@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.steefy.bookstore.dto.BookDto;
-import com.steefy.bookstore.dto.CategoryDto;
-import com.steefy.bookstore.mapper.CategoryMapper;
 import com.steefy.bookstore.service.impl.BookServiceImpl;
-import com.steefy.bookstore.service.impl.CategoryServiceImpl;
 
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,8 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class BookController {
 
     private BookServiceImpl bookService;
-    private CategoryServiceImpl categoryService;
-    private CategoryMapper categoryMapper;
 
     // Create book
     @PostMapping
@@ -52,6 +48,22 @@ public class BookController {
         return ResponseEntity.ok(bookDtos);
     }
 
+    // Get all books by author id
+    @GetMapping("/by-author")
+    public ResponseEntity<List<BookDto>> getAllByAuthorId(@RequestParam Long authorId)
+    {
+        List<BookDto> bookDtos = bookService.getAllByAuthorId(authorId);
+        return ResponseEntity.ok(bookDtos);
+    }
+
+    // Get all books by category id
+    @GetMapping("/by-category")
+    public ResponseEntity<List<BookDto>> getAllByCategoryId(@RequestParam Long categoryId)
+    {
+        List<BookDto> bookDtos = bookService.getAllByCategoryId(categoryId);
+        return ResponseEntity.ok(bookDtos);
+    }
+
     // Update book
     @PutMapping("{id}")
     public ResponseEntity<BookDto> update(@PathVariable("id") Long bookId, @RequestBody BookDto updatedBookDto){
@@ -64,13 +76,5 @@ public class BookController {
     public ResponseEntity<String> delete(@PathVariable("id") Long bookId){
         bookService.delete(bookId);
         return ResponseEntity.ok("Book deleted succesfully!");
-    }
-
-    // Get all books by categoryId
-    @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<BookDto>> getAllByCategory(@PathVariable Long categoryId){
-        CategoryDto categoryDto = categoryService.getById(categoryId);
-        List<BookDto> bookDtos = bookService.getAllByCategory(categoryMapper.mapToEntity(categoryDto));
-        return ResponseEntity.ok(bookDtos);
     }
 }

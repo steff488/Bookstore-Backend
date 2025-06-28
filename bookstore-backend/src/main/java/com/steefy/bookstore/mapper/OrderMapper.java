@@ -27,9 +27,9 @@ public class OrderMapper {
         List<OrderItem> orderItems = order.getItems();
         List<OrderItemDto> itemDtos = new ArrayList<>();
 
-         for (OrderItem orderItem : orderItems) {
-            itemDtos.add(orderItemMapper.mapToDto(orderItem));
-         }
+        for (OrderItem orderItem : orderItems) {
+        itemDtos.add(orderItemMapper.mapToDto(orderItem));
+        }
 
         return new OrderDto(
             order.getId(),
@@ -45,7 +45,7 @@ public class OrderMapper {
 
         UserDto userDto = userService.getById(orderDto.getUserId());
 
-        // Might cause issues later
+        // Manually map user
         User user = User.builder()
             .id(userDto.getId())
             .userName(userDto.getUserName())

@@ -15,6 +15,7 @@ import com.steefy.bookstore.service.impl.OrderServiceImpl;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +45,13 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<List<OrderDto>> getAll(){
         List<OrderDto> orderDtos = orderService.getAll();
+        return ResponseEntity.ok(orderDtos);
+    }
+
+    // Get all orders by user id
+    @GetMapping("/by-user")
+    public ResponseEntity<List<OrderDto>> getAllByUserId(@RequestParam() Long userId){
+        List<OrderDto> orderDtos = orderService.getAllByUserId(userId);
         return ResponseEntity.ok(orderDtos);
     }
 

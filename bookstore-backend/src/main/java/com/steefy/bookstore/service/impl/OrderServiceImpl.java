@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -62,6 +63,13 @@ public class OrderServiceImpl implements OrderService{
         }
 
         return orderDtos;
+    }
+
+    @Override
+    public List<OrderDto> getAllByUserId(Long userId) {
+
+        List<Order> orders = orderRepository.findAllByUserId(userId);
+        return orders.stream().map((order) -> orderMapper.mapToDto(order)).collect(Collectors.toList());
     }
 
     @Override
