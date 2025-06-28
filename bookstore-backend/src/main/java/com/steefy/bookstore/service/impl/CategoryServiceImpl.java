@@ -1,5 +1,6 @@
 package com.steefy.bookstore.service.impl;
 
+import com.steefy.bookstore.dto.BookDto;
 import com.steefy.bookstore.dto.CategoryDto;
 import com.steefy.bookstore.entity.Category;
 import com.steefy.bookstore.mapper.CategoryMapper;
@@ -42,8 +43,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> getAll() {
 
-        List<Category> categorys = categoryRepository.findAll();
-        return categorys.stream().map((category) -> categoryMapper.mapToDto(category)).collect(Collectors.toList());
+        List<Category> categories = categoryRepository.findAll();
+        return categories.stream().map((category) -> categoryMapper.mapToDto(category)).collect(Collectors.toList());
     }
 
     @Override
@@ -68,10 +69,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto getByName(String name) {
+    public List<BookDto> getBooksByCategoryId(Long categoryId) {
 
-        Category category = categoryRepository.findByNameIgnoreCase(name)
-        .orElseThrow(() -> new ResourceNotFoundException("Category with name '" + name + "' doesn't exist."));
-        return categoryMapper.mapToDto(category);
+        Category category = categoryRepository.findById(categoryId)
+        .orElseThrow(() -> new ResourceNotFoundException("Category with id(" + categoryId + ") doesn't exist."));
+
+        return categoryMapper.mapToDto(category).getBooks();
     }
 }

@@ -44,8 +44,8 @@ public class UserController {
     // Get all users
     @GetMapping
     public ResponseEntity<List<UserDto>> getAll(){
-        List<UserDto> users = userService.getAll();
-        return ResponseEntity.ok(users);
+        List<UserDto> userDtos = userService.getAll();
+        return ResponseEntity.ok(userDtos);
     }
 
     // Update user

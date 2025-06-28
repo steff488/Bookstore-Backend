@@ -43,8 +43,8 @@ public class AuthorController {
     // Get all authors
     @GetMapping
     public ResponseEntity<List<AuthorDto>> getAll(){
-        List<AuthorDto> authors = authorService.getAll();
-        return ResponseEntity.ok(authors);
+        List<AuthorDto> authorDtos = authorService.getAll();
+        return ResponseEntity.ok(authorDtos);
     }
 
     // Update author

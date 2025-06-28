@@ -43,8 +43,8 @@ public class OrderController {
     // Get all orders
     @GetMapping
     public ResponseEntity<List<OrderDto>> getAll(){
-        List<OrderDto> orders = orderService.getAll();
-        return ResponseEntity.ok(orders);
+        List<OrderDto> orderDtos = orderService.getAll();
+        return ResponseEntity.ok(orderDtos);
     }
 
     // Update order

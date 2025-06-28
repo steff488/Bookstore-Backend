@@ -48,8 +48,8 @@ public class BookController {
     // Get all books
     @GetMapping
     public ResponseEntity<List<BookDto>> getAll(){
-        List<BookDto> books = bookService.getAll();
-        return ResponseEntity.ok(books);
+        List<BookDto> bookDtos = bookService.getAll();
+        return ResponseEntity.ok(bookDtos);
     }
 
     // Update book
@@ -70,7 +70,7 @@ public class BookController {
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<BookDto>> getAllByCategory(@PathVariable Long categoryId){
         CategoryDto categoryDto = categoryService.getById(categoryId);
-        List<BookDto> books = bookService.getAllByCategory(categoryMapper.mapToEntity(categoryDto));
-        return ResponseEntity.ok(books);
+        List<BookDto> bookDtos = bookService.getAllByCategory(categoryMapper.mapToEntity(categoryDto));
+        return ResponseEntity.ok(bookDtos);
     }
 }

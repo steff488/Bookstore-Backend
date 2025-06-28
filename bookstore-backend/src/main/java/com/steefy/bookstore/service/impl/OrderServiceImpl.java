@@ -28,16 +28,16 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public OrderDto create(OrderDto orderDto) {
         
-       Order order = orderMapper.mapToEntity(orderDto);
-
+        Order order = orderMapper.mapToEntity(orderDto);
+        
         if (order.getItems() != null) {
             for (OrderItem item : order.getItems()) {
                 item.setOrder(order);
+            }
         }
-}
-       Order savedOrder = orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
 
-       return orderMapper.mapToDto(savedOrder);
+        return orderMapper.mapToDto(savedOrder);
     }
 
     @Override

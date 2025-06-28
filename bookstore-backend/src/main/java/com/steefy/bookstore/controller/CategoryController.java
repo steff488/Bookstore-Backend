@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.steefy.bookstore.dto.BookDto;
 import com.steefy.bookstore.dto.CategoryDto;
 import com.steefy.bookstore.service.impl.CategoryServiceImpl;
 
@@ -43,8 +44,15 @@ public class CategoryController {
     // Get all categories
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getAll(){
-        List<CategoryDto> categories = categoryService.getAll();
-        return ResponseEntity.ok(categories);
+        List<CategoryDto> categoryDtos = categoryService.getAll();
+        return ResponseEntity.ok(categoryDtos);
+    }
+
+    // Get all books by category id
+    @GetMapping("{id}/books")
+    public ResponseEntity<List<BookDto>> getBooksByCategoryId(@PathVariable("id") Long categoryId){
+        List<BookDto> bookDtos = categoryService.getBooksByCategoryId(categoryId);
+        return ResponseEntity.ok(bookDtos);
     }
 
     // Update category
