@@ -27,7 +27,4 @@ public class FavoriteItem {
 
     @Column(nullable = false)
     private Long bookId;
-
-    @Column(nullable = false)
-    private Double price;
 }

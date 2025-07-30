@@ -15,6 +15,7 @@ import com.steefy.bookstore.service.impl.CartItemServiceImpl;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,7 +50,7 @@ public class CartItemController {
 
     // Get all cartItems by userId
     @GetMapping("/by-user")
-    public ResponseEntity<List<CartItemDto>> getAllByUserId(@PathVariable Long userId){
+    public ResponseEntity<List<CartItemDto>> getAllByUserId(@RequestParam() Long userId){
         List<CartItemDto> cartItems = cartItemService.getAllByUserId(userId);
         return ResponseEntity.ok(cartItems);
     }
@@ -65,6 +66,6 @@ public class CartItemController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long cartItemId){
         cartItemService.delete(cartItemId);
-        return ResponseEntity.ok("CartItem deleted succesfully!");
+        return ResponseEntity.noContent().build();
     }
 }

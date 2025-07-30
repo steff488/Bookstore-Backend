@@ -11,5 +11,4 @@ public class FavoriteItemDto {
     private Long id;
     private Long userId;
     private Long bookId;
-    private Double price;
 }

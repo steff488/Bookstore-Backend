@@ -16,8 +16,7 @@ public class CartItemMapper {
             cartItem.getId(),
             cartItem.getUserId(),
             cartItem.getBookId(),
-            cartItem.getQuantity(),
-            cartItem.getPrice()
+            cartItem.getQuantity()
             );
     }
 
@@ -27,7 +26,6 @@ public class CartItemMapper {
         .userId(cartItemDto.getUserId())
         .bookId(cartItemDto.getBookId())
         .quantity(cartItemDto.getQuantity())
-        .price(cartItemDto.getPrice())
         .build();
     }
 }
