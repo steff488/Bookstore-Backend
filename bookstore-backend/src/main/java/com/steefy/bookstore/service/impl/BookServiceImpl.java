@@ -74,6 +74,13 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    public List<BookDto> getByTitleContainingIgnoreCase(String title) {
+
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
+        return books.stream().map((book) -> bookMapper.mapToDto(book)).collect(Collectors.toList());
+    }
+
+    @Override
     public BookDto update(Long bookId, BookDto updatedBookDto) {
 
         Book book = bookRepository.findById(bookId)

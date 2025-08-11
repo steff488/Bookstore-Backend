@@ -10,6 +10,7 @@ public interface BookService {
     List<BookDto> getAll();
     List<BookDto> getAllByAuthorId(Long authorId);
     List<BookDto> getAllByCategoryId(Long categoryId);
+    List<BookDto> getByTitleContainingIgnoreCase(String title);
     BookDto update(Long bookId, BookDto updatedBookDto);
     void delete(Long bookId);
 }
