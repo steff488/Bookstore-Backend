@@ -1,4 +1,7 @@
 <h1 align="center">Welcome to The Cozy Corner</h1>
+
+This project was generated using [Spring Boot](https://spring.io) version 3.5.3 with Java 17.
+
 <p>
 </p>
 
@@ -31,7 +34,7 @@ spring.datasource.password=your_password
 
 3. The application will automatically create tables on startup using JPA/Hibernate.
 
-## Usage
+## Getting Started
 
 Make sure to have MySQL running and properly configued.<br>
 Open a terminal and start the server with:
