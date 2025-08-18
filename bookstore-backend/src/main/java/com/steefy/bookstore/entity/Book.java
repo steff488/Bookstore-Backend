@@ -48,7 +48,7 @@ public class Book {
     @Column(nullable = false)
     private Double rating = 0.0;
 
-    @Column(length = 1000)
+    @Column(length = 5000)
     private String description;
 
     @Column(nullable = false)
