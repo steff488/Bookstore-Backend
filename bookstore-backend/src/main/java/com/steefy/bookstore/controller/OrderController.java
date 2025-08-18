@@ -15,6 +15,7 @@ import com.steefy.bookstore.service.impl.OrderServiceImpl;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,13 @@ public class OrderController {
         return ResponseEntity.ok(orderDtos);
     }
 
+    // Get all orders by user id
+    @GetMapping("/by-user")
+    public ResponseEntity<List<OrderDto>> getAllByUserId(@RequestParam() Long userId){
+        List<OrderDto> orderDtos = orderService.getAllByUserId(userId);
+        return ResponseEntity.ok(orderDtos);
+    }
+
     // Update order
     @PutMapping("{id}")
     public ResponseEntity<OrderDto> update(@PathVariable("id") Long orderId, @RequestBody OrderDto updatedOrderDto){
@@ -58,6 +66,6 @@ public class OrderController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long orderId){
         orderService.delete(orderId);
-        return ResponseEntity.ok("Order deleted succesfully!");
+        return ResponseEntity.noContent().build();
     }
 }

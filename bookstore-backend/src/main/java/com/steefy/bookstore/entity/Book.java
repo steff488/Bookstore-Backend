@@ -3,7 +3,6 @@ package com.steefy.bookstore.entity;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +35,6 @@ public class Book {
     
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonManagedReference
     private Category category;
 
     @Column(nullable = false)
@@ -50,7 +48,7 @@ public class Book {
     @Column(nullable = false)
     private Double rating = 0.0;
 
-    @Column(length = 1000)
+    @Column(length = 5000)
     private String description;
 
     @Column(nullable = false)

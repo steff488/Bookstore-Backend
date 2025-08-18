@@ -1,14 +1,14 @@
 package com.steefy.bookstore.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import lombok.AllArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
+public class FavoriteItemDto {
     private Long id;
-    private String name;
+    private Long userId;
+    private Long bookId;
 }

@@ -56,7 +56,27 @@ public class BookServiceImpl implements BookService{
     public List<BookDto> getAll() {
 
         List<Book> books = bookRepository.findAll();
+        return books.stream().map((book) -> bookMapper.mapToDto(book)).collect(Collectors.toList());
+    }
 
+    @Override
+    public List<BookDto> getAllByAuthorId(Long authorId) {
+
+        List<Book> books = bookRepository.findAllByAuthorId(authorId);
+        return books.stream().map((book) -> bookMapper.mapToDto(book)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookDto> getAllByCategoryId(Long categoryId) {
+
+        List<Book> books = bookRepository.findAllByCategoryId(categoryId);
+        return books.stream().map((book) -> bookMapper.mapToDto(book)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookDto> getByTitleContainingIgnoreCase(String title) {
+
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
         return books.stream().map((book) -> bookMapper.mapToDto(book)).collect(Collectors.toList());
     }
 
@@ -94,19 +114,5 @@ public class BookServiceImpl implements BookService{
         .orElseThrow(() -> new ResourceNotFoundException("Book with id(" + bookId + ") doesn't exist."));
         
         bookRepository.deleteById(bookId);
-    }
-
-    @Override
-    public List<BookDto> getAllByCategory(Category category) {
-
-        List<Book> books = bookRepository.findAllByCategory(category);
-        return books.stream().map((book) -> bookMapper.mapToDto(book)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<BookDto> getAllByAuthor(Author author) {
-
-        List<Book> books = bookRepository.findAllByAuthor(author);
-        return books.stream().map((book) -> bookMapper.mapToDto(book)).collect(Collectors.toList());
     }
 }
